@@ -1,7 +1,9 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\Card;
 use Yii;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -60,7 +62,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $cardQ = Card::find();
+        $pages = new Pagination(['totalCount' => $cardQ->count(),'pageSize'=>6]);
+        $cards = $cardQ
+            ->orderBy(['id'=>SORT_DESC])
+            ->limit($pages->limit)
+            ->offset($pages->offset)
+            ->all();
+        return $this->render('index',compact('cards', 'pages'));
     }
 
     /**

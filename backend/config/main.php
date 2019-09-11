@@ -41,6 +41,8 @@ return [
         'db' => require __DIR__ . '/../../common/config/db.php',
         'urlManager' => [
             'enablePrettyUrl' => true,
+//            'suffix' => '.sh',
+            'enableStrictParsing' =>true,
             'showScriptName' => false,
             'rules' => require __DIR__ . '/routes.php',
         ],
