@@ -6,7 +6,7 @@ use yii\widgets\LinkPager;
 
 $this->title = 'Admin page';
 ?>
-<div class="site-index">
+<div class="site-index col-md-12">
 
     <div class="jumbotron">
         <h1><?=$this->title?></h1>
@@ -15,18 +15,15 @@ $this->title = 'Admin page';
 
     </div>
 
-    <div class="body-content">
-        <div class="row">
+    <div class="body-content col-md-12">
             <div class="card-deck col-md-12">
                 <?php foreach ($cards as $card){
                     echo $this->render('../card/card', compact('card'));
                 }
                 ?>
             </div>
-        </div>
         <?= LinkPager::widget([
             'pagination' => $pages,
         ]); ?>
-
     </div>
 </div>
