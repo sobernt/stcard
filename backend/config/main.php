@@ -13,18 +13,20 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'homeUrl' => '/admin',
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-backend',
+            'csrfParam' => '_csrf-admin',
+            'baseUrl' => '/admin',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-admin', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
-            'name' => 'advanced-backend',
+            'name' => 'advanced-admin',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -41,7 +43,6 @@ return [
         'db' => require __DIR__ . '/../../common/config/db.php',
         'urlManager' => [
             'enablePrettyUrl' => true,
-//            'suffix' => '.sh',
             'enableStrictParsing' =>true,
             'showScriptName' => false,
             'rules' => require __DIR__ . '/routes.php',

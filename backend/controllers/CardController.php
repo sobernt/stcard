@@ -8,7 +8,9 @@ use backend\models\Card;
 use backend\models\CardImageUpload;
 use phpDocumentor\Reflection\Types\Boolean;
 use yii\base\Controller;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
+use yii\web\UrlManager;
 
 class CardController extends Controller
 {
@@ -70,7 +72,7 @@ class CardController extends Controller
             unlink(\Yii::$app->basePath . '/web/uploads/' . $card->img);
         }
         $card->delete();
-        \Yii::$app->response->redirect('/');
+        \Yii::$app->response->redirect(Url::to(['site/index']));
     }
     private function changeCard(Card $card,$is_update = false){
         if (isset($_POST['Card']) && isset($_POST['CardImageUpload']))
@@ -89,7 +91,7 @@ class CardController extends Controller
                 $card->img = $submodel->filename;
             }
             if ($card->validate() && $card->save(true,['title','description','img'])) {
-                \Yii::$app->response->redirect('/');
+                \Yii::$app->response->redirect(Url::to(['site/index']));
             } else {
                 Yii::$app->session->setFlash('error', 'Sorry, can\'t save card because input data is incorrect.');
             }

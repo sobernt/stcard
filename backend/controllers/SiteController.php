@@ -63,7 +63,12 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $cardQ = Card::find();
-        $pages = new Pagination(['totalCount' => $cardQ->count(),'pageSize'=>6]);
+        $pages = new Pagination([
+            'totalCount' => $cardQ->count(),
+            'pageSize'=>6,
+            'pageSizeParam' => false,
+            'forcePageParam' => false,
+        ]);
         $cards = $cardQ
             ->orderBy(['id'=>SORT_DESC])
             ->limit($pages->limit)
