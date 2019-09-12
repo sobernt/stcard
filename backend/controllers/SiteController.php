@@ -1,7 +1,7 @@
 <?php
 namespace backend\controllers;
 
-use backend\models\Card;
+use common\models\Card;
 use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;

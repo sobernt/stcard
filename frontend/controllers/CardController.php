@@ -4,8 +4,7 @@
 namespace frontend\controllers;
 
 
-use backend\models\Card;
-use backend\models\CardImageUpload;
+use common\models\Card;
 use yii\web\Controller;
 
 class CardController extends Controller

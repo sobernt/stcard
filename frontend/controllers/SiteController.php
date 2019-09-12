@@ -1,7 +1,7 @@
 <?php
 namespace frontend\controllers;
 
-use backend\models\Card;
+use common\models\Card;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;

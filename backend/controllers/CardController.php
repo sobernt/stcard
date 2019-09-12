@@ -4,7 +4,7 @@
 namespace backend\controllers;
 
 
-use backend\models\Card;
+use common\models\Card;
 use backend\models\CardImageUpload;
 use phpDocumentor\Reflection\Types\Boolean;
 use yii\base\Controller;
