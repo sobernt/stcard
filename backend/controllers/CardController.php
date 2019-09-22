@@ -6,7 +6,7 @@ namespace backend\controllers;
 
 use common\models\Card;
 use backend\models\CardImageUpload;
-use phpDocumentor\Reflection\Types\Boolean;
+use common\models\Category;
 use yii\base\Controller;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
@@ -26,9 +26,11 @@ class CardController extends Controller
                 ->where(['id' => $id])
                 ->one();
         }
+        $categories = Category::find()->all();
         return $this->render('cardEdit',[
             'model'=>$card,
-            'submodel'=>new CardImageUpload()
+            'submodel'=>new CardImageUpload(),
+            'categories'=>$categories
         ]);
     }
     public function actionCreate()
@@ -36,9 +38,12 @@ class CardController extends Controller
         $card = new Card();
         $this->changeCard($card);
 
+        $categories = Category::find()->all();
+
         $this->render('cardEdit',[
             'model'=>$card,
-            'submodel'=>new CardImageUpload()
+            'submodel'=>new CardImageUpload(),
+            'categories'=>$categories
         ]);
     }
     public function actionUpdate()
@@ -53,9 +58,12 @@ class CardController extends Controller
         $card = Card::findOne(['id'=>$id]);
         $this->changeCard($card,true);
 
+
+        $categories = Category::find()->all();
         $this->render('cardEdit',[
             'model'=>$card,
-            'submodel'=>new CardImageUpload()
+            'submodel'=>new CardImageUpload(),
+            'categories'=>$categories
         ]);
     }
     public function actionDelete()
@@ -79,6 +87,7 @@ class CardController extends Controller
         {
             $card->title = $_POST['Card']['title'];
             $card->description = $_POST['Card']['description'];
+            $card->category_id = $_POST['Card']['category_id'];
 
             $submodel = new CardImageUpload();
 
@@ -90,7 +99,7 @@ class CardController extends Controller
                 }
                 $card->img = $submodel->filename;
             }
-            if ($card->validate() && $card->save(true,['title','description','img'])) {
+            if ($card->validate() && $card->save(true,['title','description','img','category_id'])) {
                 \Yii::$app->response->redirect(Url::to(['site/index']));
             } else {
                 Yii::$app->session->setFlash('error', 'Sorry, can\'t save card because input data is incorrect.');

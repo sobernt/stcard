@@ -9,6 +9,14 @@ use yii\helpers\Url;
         <div class="card-body">
             <h3 class="card-title font-weight-bold"><?= $card->title ?></h3>
             <p class="card-text"><?= $card->description ?></p>
+
+            <div>
+                <?php if($card->category){?>
+                    <a href="<?=Url::to(['category/'.$card->category->id])?>" class="btn btn-link">
+                        <?= $card->category->name ?>
+                    </a>
+                <?php }?>
+            </div>
         </div>
         <div class="card-footer">
             <div class="show-count-container">

@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\Card;
+use common\models\Category;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -76,19 +77,30 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $cardQ = Card::find();
+        $category_id = null;
+        $find = [];
+        if (isset($_GET['id']))
+        {
+            $category_id = \Yii::$app->request->get('id');
+            $find = ['category_id'=>$category_id];
+        }
+        $cardQ = Card::find()->where($find)->with('category');
         $pages = new Pagination([
             'totalCount' => $cardQ->count(),
             'pageSize'=>6,
             'pageSizeParam' => false,
             'forcePageParam' => false,
         ]);
+        $categories = Category::find()->orderBy("name ASC")->all();
+        $allcat = new Category();
+        $allcat->name = "All";
+        array_unshift($categories, $allcat);
         $cards = $cardQ
             ->orderBy(['id'=>SORT_DESC])
             ->limit($pages->limit)
             ->offset($pages->offset)
             ->all();
-        return $this->render('index',compact('cards', 'pages'));
+        return $this->render('index',compact('cards', 'pages','categories','category_id'));
     }
 
     /**

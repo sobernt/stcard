@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use common\models\Card;
+use common\models\Category;
 use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -62,19 +63,27 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $cardQ = Card::find();
+        $category_id = null;
+        $find = [];
+        if (isset($_GET['id']))
+        {
+            $category_id = \Yii::$app->request->get('id');
+            $find = ['category_id'=>$category_id];
+        }
+        $cardQ = Card::find()->where($find);
         $pages = new Pagination([
             'totalCount' => $cardQ->count(),
             'pageSize'=>6,
             'pageSizeParam' => false,
             'forcePageParam' => false,
         ]);
+        $categories = Category::find()->orderBy("name ASC")->all();
         $cards = $cardQ
             ->orderBy(['id'=>SORT_DESC])
             ->limit($pages->limit)
             ->offset($pages->offset)
             ->all();
-        return $this->render('index',compact('cards', 'pages'));
+        return $this->render('index',compact('cards', 'pages','categories','category_id'));
     }
 
     /**

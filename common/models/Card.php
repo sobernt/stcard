@@ -23,7 +23,15 @@ class Card extends ActiveRecord
             [['description'], 'string', 'min' => 3, 'max' => 255],
             [['img'], 'string'],
             [['views'], 'integer'],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory() {
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
     public function attributeLabels()
