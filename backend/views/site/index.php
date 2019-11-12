@@ -23,6 +23,9 @@ $this->title = 'Admin page';
                 echo $this->render('../category/link', compact('category','category_id'));
             }
             ?>
+            <li class="btn btn-primary">
+                <?= Html::a("+", ['/categories'], ['class' => 'text-light','style'=>'color:#fff!important;text-decoration:none;']) ?>
+            </li>
         </div>
     </div>
 
